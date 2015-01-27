@@ -1,2 +1,2 @@
 # banana
-argegator scheduler module
+aggregator scheduler module
