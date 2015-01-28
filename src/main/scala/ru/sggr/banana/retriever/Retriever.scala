@@ -1,24 +1,15 @@
 package ru.sggr.banana.retriever
 
+import ru.sggr.banana.queue.Queue
+
 /**
  * trait for information retriever object
  * Created by Andrey Sviridov 1/27/15.
  */
-trait Retriever[T] {
+trait Retriever {
 
   /**
    * every retriever has single method to start retrieve items
    */
-  def retrieve: Unit
-
-  /**
-   * when retriever finds an item it should call save method immediately
-   * the method would send information about collected item to 
-   * other part of system in async manner
-   *
-   * @param item just collected item
-   */
-  protected def save(item: T): Unit = {
-    ???
-  }
+  def retrieve(queue: Queue): Unit
 }

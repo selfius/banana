@@ -4,7 +4,7 @@ package ru.sggr.banana.queue
  * Trait for queue from here persisters cat take elements and persists.
  * Banana take items from retriever and push to queue.
  *
- * @author tolya 
+ * @author tolya
  * @since  27.01.15.
  */
 trait Queue {
@@ -14,5 +14,5 @@ trait Queue {
    *
    * @param item abstract data
    */
-  def push(item: Any): Boolean
+  def push(item: Any): Unit
 }
