@@ -4,6 +4,12 @@ version := "0.1"
 
 scalaVersion := "2.11.5"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test"
+libraryDependencies ++= Seq (
+  "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test",
+  "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test",
+  "ru.sggr.banana" % "banana-api" % "1.0-SNAPSHOT"
+)
 
-libraryDependencies += "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test"
+resolvers += Resolver.mavenLocal
+
+

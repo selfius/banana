@@ -3,7 +3,12 @@ package ru.sggr.banana.retriever
 import org.scalatest.FunSuite
 import ru.sggr.banana.mock.queue.NullQueue
 import ru.sggr.banana.mock.retriever.RandomIntRetriever
-import ru.sggr.banana.queue.Queue
+import ru.sggr.banana.api.Queue
+import ru.sggr.banana.api.Retriever
+import ru.sggr.banana.api.Item
+import java.time.ZonedDateTime
+
+
 
 /**
  * Test suite stub for [[Retriever]]
@@ -23,14 +28,14 @@ class RetrieverTest extends FunSuite {
        *
        * @param item abstract data
        */
-      override def push(item: Any): Unit = {
+      override def push(item: Item): Unit = {
         super.push(item)
         count = count + 1
       }
     }
 
     val retriever = new RandomIntRetriever(2)
-    retriever.retrieve(queue)
+    retriever.retrieve(queue, ZonedDateTime.now)
 
     // balancing
 
@@ -41,7 +46,12 @@ class RetrieverTest extends FunSuite {
    * Our architecture must not modify items
    */
   test("unmodifiable item") {
-    val generatedItem: String = "Banana does not modify item"
+    val generatedItem = new Item {
+      override def getItemId = "some id goes here"
+      override def getRetrieverId = "Doesn't matter"
+      override def getRetrieveDate = ZonedDateTime.now
+      override def getData = "Banana does not modify item"
+    }
 
     val queue = new NullQueue {
       /**
@@ -49,9 +59,8 @@ class RetrieverTest extends FunSuite {
        *
        * @param item abstract data
        */
-      override def push(item: Any): Unit = {
-        super.push(item)
-        assert(item.isInstanceOf[String])
+      override def push(item: Item): Unit = {
+        assert(item.isInstanceOf[Item])
         assert(generatedItem.eq(item.asInstanceOf[AnyRef]))
       }
     }
@@ -60,11 +69,12 @@ class RetrieverTest extends FunSuite {
       /**
        * every retriever has single method to start retrieve items
        */
-      override def retrieve(queue: Queue): Unit = queue.push(generatedItem)
+      override def retrieve(queue: Queue, lastUpdateDate: ZonedDateTime, items: String*) : Unit = 
+        queue.push(generatedItem)
     }
 
     // balancing
 
-    retriever.retrieve(queue)
+    retriever.retrieve(queue, ZonedDateTime.now)
   }
 }

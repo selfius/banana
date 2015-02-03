@@ -1,6 +1,7 @@
 package ru.sggr.banana.mock.queue
 
-import ru.sggr.banana.queue.Queue
+import ru.sggr.banana.api.Item
+import ru.sggr.banana.api.Queue
 
 /**
  * Empty mock for queue.
@@ -14,5 +15,5 @@ class NullQueue extends Queue {
    *
    * @param item abstract data
    */
-  override def push(item: Any): Unit = {}
+  override def push(item: Item): Unit = {}
 }

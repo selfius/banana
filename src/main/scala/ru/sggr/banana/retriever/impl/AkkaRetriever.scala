@@ -1,6 +1,7 @@
 package ru.sggr.banana.retriever.impl
 
-import ru.sggr.banana.retriever.Retriever
+
+import ru.sggr.banana.api.Retriever
 
 /**
  * @author tolya 
